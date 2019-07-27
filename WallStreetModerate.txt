@@ -1,0 +1,61 @@
+Sub WallStreetModerate()
+    Dim Start As Double
+    Dim Finish As Double
+    Dim VolumeTotal As Double
+    
+    LastRow = Cells(Rows.Count, 1).End(xlUp).Row
+    TickerRow = 2
+    Cells(1, 9) = "Ticker"
+    Cells(1, 12) = "Total Stock Volume"
+    Cells(1, 10) = "Yearly Change"
+    Cells(1, 11) = "Percent Change"
+
+    
+    
+    
+    For I = 2 To LastRow
+        
+            
+        
+        If Cells(I, 1) <> Cells(I - 1, 1) Then
+            VolumeTotal = 0
+            Cells(TickerRow, 9) = Cells(I, 1)
+            Start = Cells(I, 3)
+         
+        End If
+        VolumeTotal = Cells(I, 7) + VolumeTotal
+    
+        
+        If Cells(I, 1) <> Cells(I + 1, 1) Then
+            Cells(TickerRow, 12) = VolumeTotal
+            Finish = Cells(I, 6)
+                
+            If Start <> 0 Then
+            
+                Cells(TickerRow, 10) = (Finish - Start)
+                Cells(TickerRow, 11) = ((Finish - Start) / Start)
+                Cells(TickerRow, 11).NumberFormat = "0.00%"
+            End If
+            If (Finish - Start) > 0 Then
+                Cells(TickerRow, 10).Interior.ColorIndex = 4
+                ElseIf (Finish - Start) < 0 Then
+                Cells(TickerRow, 10).Interior.ColorIndex = 3
+                    
+            End If
+            TickerRow = TickerRow + 1
+            
+        End If
+    
+            
+        
+
+            
+        
+            
+        
+        
+    Next I
+Columns("I:L").EntireColumn.AutoFit
+
+End Sub
+

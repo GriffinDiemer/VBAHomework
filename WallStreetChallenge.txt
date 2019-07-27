@@ -1,0 +1,41 @@
+Sub WallStreetChallenge()
+     
+    For Each ws In Worksheets
+    Dim VolumeTotal As Double
+    
+    LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+    ws.Cells(1, 9) = "Ticker"
+    ws.Cells(1, 10) = "Total Stock Volume"
+    TickerRow = 2
+    
+
+
+    For I = 2 To LastRow
+        
+        If ws.Cells(I, 1) <> ws.Cells(I - 1, 1) Then
+            VolumeTotal = 0
+            ws.Cells(TickerRow, 9) = ws.Cells(I, 1)
+            
+         
+        End If
+        
+        VolumeTotal = ws.Cells(I, 7) + VolumeTotal
+        
+        If ws.Cells(I, 1) <> ws.Cells(I + 1, 1) Then
+                Finish = ws.Cells(I, 6)
+                
+                ws.Cells(TickerRow, 10) = VolumeTotal
+                TickerRow = TickerRow + 1
+        End If
+            
+        
+        
+    Next I
+
+ws.Columns("I:J").EntireColumn.AutoFit
+    
+    Next ws
+    
+
+End Sub
+
